@@ -29,7 +29,7 @@ public class Util {
         return conn;
     }
 
-    public static StringBuffer getHtml(String url) throws Exception{
+    /*public static StringBuffer getHtml(String url) throws Exception{
         URL url1 = new URL(url);
         URLConnection connection = url1.openConnection();
         InputStream is = connection.getInputStream();
@@ -41,7 +41,7 @@ public class Util {
         bw.close();
         is.close();
         return sb;
-    }
+    }*/
 
 
 }
