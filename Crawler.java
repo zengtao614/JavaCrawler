@@ -1,5 +1,6 @@
 package com.demo.javaCrawler;
 
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.net.URL;
@@ -24,6 +25,11 @@ public class Crawler extends Thread {
     @Override
     public void run() {
         try {
+            File file = new File(folderName);
+            if (file.exists()) {
+                Hbcrawler.delete(file);
+            }
+            file.mkdirs();
             String thisUrl = url;
             while (true) {
                 StringBuffer html = Hbcrawler.getHtml(thisUrl);

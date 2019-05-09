@@ -13,22 +13,30 @@ public class Hbcrawler {
 
     private static String suggestsRegex = "app.page\\[\"suggests\"\\] = \\{.*\\}";
     private static String urlRegex = "\"url\":\".*?\"";
-    private static String folder_name = "C:\\Users\\曾涛\\Desktop\\HbCrawler\\";
+    private String folder_name ;//存储路径
+    private String url;//
 
+    public Hbcrawler(String url,String folder_name) {
+        this.folder_name = folder_name;
+        this.url = url;
+    }
 
     public static void main(String[] args) throws Exception {
         String url = "https://huaban.com/boards/favorite/beauty/";
-        startCrawle(url);
+        String folder_name = "E:\\HbCrawler\\";
+        new Hbcrawler(url,folder_name).startCrawle();
+
+        //单独爬取某一画板
+//        new Crawler("https://huaban.com/boards/50744395/","E:\\HbCrawler\\52334297\\").start();
     }
 
     /**
      * 获取每个画板的url并启动爬虫
      *
-     * @param originUrl
      * @throws Exception
      */
-    public static void startCrawle(String originUrl) throws Exception {
-        StringBuffer html = getHtml(originUrl);
+    public void startCrawle() throws Exception {
+        StringBuffer html = getHtml(url);
         Matcher matcherSu = Pattern.compile(suggestsRegex).matcher(html);
         while (matcherSu.find()) {
             Matcher matcherUrl = Pattern.compile(urlRegex).matcher(matcherSu.group());
@@ -42,11 +50,6 @@ public class Hbcrawler {
                     }
                     String url = "https://huaban.com/boards/" + id;
                     String folderName = folder_name + id;
-                    File file = new File(folderName);
-                    if (file.exists()) {
-                        delete(file);
-                    }
-                    file.mkdirs();
                     new Crawler(url, folderName + "\\").start();
                 }
             }
